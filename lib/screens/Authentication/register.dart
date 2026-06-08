@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home_screen_m.dart';
+import 'package:flutter_application_1/screens/Authentication/login.dart';
+import 'package:flutter_application_1/screens/MultiProviders/home_screen_m.dart';
+import 'package:flutter_application_1/screens/small_app.dart/mini_app.dart';
 
 class RegisterClass extends StatefulWidget {
   const RegisterClass({super.key});
@@ -30,7 +32,7 @@ class _RegisterClassState extends State<RegisterClass> {
       );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreenM()),
+        MaterialPageRoute(builder: (context) => MiniApp()),
       );
     } catch (e) {
       ScaffoldMessenger.of(

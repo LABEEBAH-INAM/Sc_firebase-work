@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login.dart';
-import 'package:flutter_application_1/screens/home_screen_m.dart';
 import 'package:flutter_application_1/screens/small_app.dart/mini_app.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,7 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: FlutterLogo(size: 100,)
-    ));
+    return 
+    Scaffold(body: Center(child:
+              Image.asset('assets/icons/app_icon.png', width: 150, height: 150),
+)
+    );
   }
 }

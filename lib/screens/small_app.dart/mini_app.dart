@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login.dart';
-import 'package:flutter_application_1/screens/small_app.dart/home_Screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/location_screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/more_screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/profile_screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/settings_screen.dart';
 import 'package:flutter_application_1/screens/Crud/crud_home_screen.dart';
+import 'package:flutter_application_1/screens/Crud Product/product_crud_home_screen.dart';
+
 
 class MiniApp extends StatefulWidget {
   MiniApp({super.key});
@@ -23,7 +23,7 @@ class _MiniAppState extends State<MiniApp> {
 
   List<Widget> widgets = [
     CrudHomeScreen(),
-    ProfileScreen(),
+ProductCrudHomeScreen(),
     SettingsScreen(),
     LocationScreen(),
     MoreScreen(),

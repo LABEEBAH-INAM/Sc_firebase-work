@@ -41,7 +41,7 @@ class _CrudHomeScreenState extends State<CrudHomeScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(' Crud Gome Screen!!', style: TextStyle(fontSize: 30,backgroundColor: Colors.blueAccent, fontWeight: FontWeight.bold),),
+                child: Text(' Create Read Update Delete User!!', style: TextStyle(fontSize: 30,backgroundColor: Colors.blueAccent, fontWeight: FontWeight.bold),),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

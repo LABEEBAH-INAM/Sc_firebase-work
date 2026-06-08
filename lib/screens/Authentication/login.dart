@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/register.dart';
+// import 'package:flutter_application_1/screens/Authentication/google_sign_in.dart';
 import 'package:flutter_application_1/screens/ForgotPassword/forgot_password.dart';
-import 'package:flutter_application_1/screens/home_screen_m.dart';
 import 'package:flutter_application_1/screens/small_app.dart/mini_app.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginClass extends StatefulWidget {
-  const LoginClass({super.key});
+ const LoginClass({super.key});
+ 
 
   @override
   State<LoginClass> createState() => _LoginClassState();
@@ -25,7 +26,7 @@ class _LoginClassState extends State<LoginClass> {
       loading = true;
     });
     try {
-      auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email.text,
         password: password.text,
       );
@@ -43,35 +44,45 @@ class _LoginClassState extends State<LoginClass> {
     }
   }
 
-  void continueWitGoogle() async {
-    String webClientID =
+  void continueWithGooglee() async {
+    // Fixed spelling
+    String webClientId =
         '1059284167916-gg15dml65ib20p79r5ok0j3v2h8p7ied.apps.googleusercontent.com';
-    try {
-      GoogleSignIn signIn = GoogleSignIn.instance;
-      await signIn.initialize(serverClientId: webClientID);
-      GoogleSignInAccount account = await signIn.authenticate();
-      GoogleSignInAuthentication googleAuth = account.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
 
+    try {
       setState(() {
-        loading = true;
+        loading = true; // Start loading at the beginning
       });
 
-      await auth.signInWithCredential(credential);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (Context) => MiniApp()),
-        (value) => false,
-      );
+      GoogleSignIn signIn = GoogleSignIn.instance;
+      await signIn.initialize(serverClientId: webClientId);
+
+      GoogleSignInAccount? account = await signIn.authenticate();
+
+      // Added null check to prevent crashes
+      if (account != null) {
+        GoogleSignInAuthentication googleAuth = await account.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+        );
+
+        // Call this only once
+        await auth.signInWithCredential(credential);
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MiniApp()),
+          (value) => false,
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       setState(() {
-        loading = false;
+        loading = false; // Always stop loading in finally block
       });
     }
   }
@@ -141,17 +152,11 @@ class _LoginClassState extends State<LoginClass> {
                     },
                     child: Text('Forgot Password?'),
                   ),
-
-                  ElevatedButton(
+                  TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ForgotPasswordClass(),
-                        ),
-                      );
+                      continueWithGooglee();
                     },
-                    child: Text('Continue with google'),
+                    child: Text('Continue with Google?'),
                   ),
 
                   SizedBox(height: 20),
