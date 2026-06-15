@@ -47,68 +47,175 @@ class _RegisterClassState extends State<RegisterClass> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: formKey,
-        child: ListView(
-          padding: EdgeInsets.all(15),
+    return 
+    Scaffold(
+  backgroundColor: const Color(0xFFFDF7FA),
+  body: Form(
+    key: formKey,
+    child: ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        const SizedBox(height: 40),
+
+        Center(
+          child: Image.asset(
+            'assets/images/logo.png',
+            height: 120,
+            width: 120,
+            fit: BoxFit.contain,
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        Center(
+          child: Text(
+            'Register Here',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF2D2D2D),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 10),
+
+        const Center(
+          child: Text(
+            'Create your bookstore account',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 15,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 35),
+
+        TextFormField(
+          controller: name,
+          decoration: InputDecoration(
+            hintText: 'Your Name',
+            prefixIcon: const Icon(
+              Icons.person,
+              color: Color(0xFFFF85BB),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please Enter Name';
+            }
+            return null;
+          },
+        ),
+
+        const SizedBox(height: 20),
+
+        TextFormField(
+          controller: email,
+          decoration: InputDecoration(
+            hintText: 'Your Email',
+            prefixIcon: const Icon(
+              Icons.email,
+              color: Color(0xFFFF85BB),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please Enter Email';
+            }
+            return null;
+          },
+        ),
+
+        const SizedBox(height: 20),
+
+        TextFormField(
+          controller: password,
+          obscureText: true,
+          decoration: InputDecoration(
+            hintText: 'Your Password',
+            prefixIcon: const Icon(
+              Icons.lock,
+              color: Color(0xFFFF85BB),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please Enter Password';
+            }
+            return null;
+          },
+        ),
+
+        const SizedBox(height: 30),
+
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFFF85BB),
+            minimumSize: const Size(double.infinity, 55),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              RegisterNow();
+            }
+          },
+          child: const Text(
+            'Register',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            Text(
-              'Register here',
-              style: Theme.of(context).textTheme.headlineLarge,
+            const Text(
+              'Already have an account?',
+              style: TextStyle(color: Colors.black87),
             ),
-            SizedBox(height: 20),
-
-            TextFormField(
-              controller: name,
-              decoration: InputDecoration(hintText: 'YOur Name:'),
-
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please Enter Name:';
-                }
-                return null;
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
               },
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  color: Color(0xFFFF85BB),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            SizedBox(height: 20,),
-
-            TextFormField(
-              controller: email,
-              decoration: InputDecoration(hintText: 'YOur email:'),
-
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please Enter Email:';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 20,),
-
-            TextFormField(
-              controller: password,
-              decoration: InputDecoration(hintText: 'YOur password:'),
-
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please Enter PAssword:';
-                }
-                return null;
-              },
-            ),
-
-            SizedBox(height: 20,),
-
-            ElevatedButton(onPressed: (){
-              if(formKey.currentState!.validate()){
-                   RegisterNow();
-              }
-            },
-             child:Text('Register') )
           ],
         ),
-      ),
-    );
+      ],
+    ),
+  ),
+);
   }
 }

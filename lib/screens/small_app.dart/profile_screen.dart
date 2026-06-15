@@ -6,6 +6,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProductCrudHomeScreen();
+    return Center(child: Text('Profile Screen Material'));
   }
 }

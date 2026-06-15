@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login.dart';
-import 'package:flutter_application_1/screens/small_app.dart/location_screen.dart';
-import 'package:flutter_application_1/screens/small_app.dart/more_screen.dart';
+import 'package:flutter_application_1/screens/MultiProviders/home_screen_m.dart';
+import 'package:flutter_application_1/screens/small_app.dart/home_Screen.dart';
+import 'package:flutter_application_1/screens/small_app.dart/wishlist_screen.dart';
+import 'package:flutter_application_1/screens/small_app.dart/orders_screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/profile_screen.dart';
-import 'package:flutter_application_1/screens/small_app.dart/settings_screen.dart';
+import 'package:flutter_application_1/screens/small_app.dart/discover_screen.dart';
 import 'package:flutter_application_1/screens/Crud/crud_home_screen.dart';
 import 'package:flutter_application_1/screens/Crud Product/product_crud_home_screen.dart';
-
 
 class MiniApp extends StatefulWidget {
   MiniApp({super.key});
@@ -22,13 +23,15 @@ class _MiniAppState extends State<MiniApp> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   List<Widget> widgets = [
-    CrudHomeScreen(),
-ProductCrudHomeScreen(),
-    SettingsScreen(),
-    LocationScreen(),
-    MoreScreen(),
+    HomeScreen(),
+    DiscoverScreen(),
+    WishListScreen(),
+    OrdersScreen(),
+    ProfileScreen(),
   ];
+
   int currentIndex = 0;
+
   void logOut() async {
     try {
       await auth.signOut();
@@ -38,9 +41,7 @@ ProductCrudHomeScreen(),
         (value) => false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(toString())));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
     }
   }
 
@@ -50,37 +51,55 @@ ProductCrudHomeScreen(),
       key: globalKey,
       appBar: AppBar(
         centerTitle: true,
-
         title: Text(
           currentIndex == 0
               ? 'Home'
               : currentIndex == 1
-              ? 'Profile'
+              ? 'Discover'
               : currentIndex == 2
-              ? 'Settings'
+              ? 'WishList'
               : currentIndex == 3
-              ? 'Location'
-              : 'More',
+              ? 'Orders'
+              : 'Profile',
           style: TextStyle(
-            color: Colors.purple,
-            fontSize: 30,
-
+            color: Colors.white,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFFFF85BB),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFFF85BB), Color(0xFFCE6CFF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         leading: IconButton(
           onPressed: () {
             globalKey.currentState!.openDrawer();
           },
-          icon: Icon(Icons.menu),
+          icon: Icon(Icons.menu, color: Colors.white),
         ),
       ),
-
       drawer: Drawer(
-        backgroundColor: const Color.fromARGB(255, 202, 206, 213),
+        backgroundColor: Color(0xFFF5F5F5),
         child: ListView(
           children: [
+DrawerHeader(
+  decoration: BoxDecoration(
+    color: Color(0xFFFF85BB),
+  ),
+  child: Center(
+    child: Image.asset(
+      'assets/icons/app_icon.png',
+      height: 120,
+    ),
+  ),
+),
+            SizedBox(height: 20),
             ListTile(
               selected: currentIndex == 0,
               onTap: () {
@@ -89,10 +108,12 @@ ProductCrudHomeScreen(),
                   currentIndex = 0;
                 });
               },
-              title: Text('Crud Home'),
-              leading: Icon(Icons.home, color: Colors.lightBlue),
+              title: Text(' Home'),
+              leading: Icon(
+                CupertinoIcons.house_fill,
+                color: Color(0xFFFF85BB),
+              ),
             ),
-
             ListTile(
               selected: currentIndex == 1,
               onTap: () {
@@ -101,10 +122,9 @@ ProductCrudHomeScreen(),
                   currentIndex = 1;
                 });
               },
-              title: Text('Profile'),
-              leading: Icon(Icons.person, color: Colors.lightBlue),
+              title: Text('Discover'),
+              leading: Icon(CupertinoIcons.search, color: Color(0xFFFF85BB)),
             ),
-
             ListTile(
               selected: currentIndex == 2,
               onTap: () {
@@ -113,10 +133,12 @@ ProductCrudHomeScreen(),
                   currentIndex = 2;
                 });
               },
-              title: Text('Settings'),
-              leading: Icon(Icons.settings, color: Colors.lightBlue),
+              title: Text('WishList'),
+              leading: Icon(
+                CupertinoIcons.heart_fill,
+                color: Color(0xFFFF85BB),
+              ),
             ),
-
             ListTile(
               selected: currentIndex == 3,
               onTap: () {
@@ -125,10 +147,9 @@ ProductCrudHomeScreen(),
                   currentIndex = 3;
                 });
               },
-              title: Text('Location'),
-              leading: Icon(Icons.location_city, color: Colors.lightBlue),
+              title: Text('Orders'),
+              leading: Icon(CupertinoIcons.bag_fill, color: Color(0xFFFF85BB)),
             ),
-
             ListTile(
               selected: currentIndex == 4,
               onTap: () {
@@ -137,20 +158,26 @@ ProductCrudHomeScreen(),
                   currentIndex = 4;
                 });
               },
-              title: Text('More'),
-              leading: Icon(Icons.more, color: Colors.lightBlue),
+              title: Text('Profile'),
+              leading: Icon(
+                CupertinoIcons.person_fill,
+                color: Color(0xFFFF85BB),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 logOut();
               },
-              child: Text('LogOut'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFFF85BB),
+              ),
+              child: Text('LogOut', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
       ),
-      body: widgets[currentIndex],
-
+      
+      body: Container(color: Color(0xFFF5F5F5), child: widgets[currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           setState(() {
@@ -158,27 +185,24 @@ ProductCrudHomeScreen(),
           });
         },
         currentIndex: currentIndex,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.blueGrey,
-        iconSize: 20,
+        selectedItemColor: Color(0xFFFF85BB),
+        unselectedItemColor: Colors.grey,
         items: [
-          BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-
-          BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-
           BottomNavigationBarItem(
-            label: 'Settings',
-            icon: Icon(Icons.settings),
+            label: 'Home',
+            icon: Icon(CupertinoIcons.house_fill),
           ),
-
           BottomNavigationBarItem(
-            label: 'location',
-            icon: Icon(Icons.location_city_outlined),
+            label: 'Discover',
+            icon: Icon(CupertinoIcons.search),
           ),
-
           BottomNavigationBarItem(
-            label: 'More',
-            icon: Icon(Icons.more_rounded),
+            label: 'WishList',
+            icon: Icon(CupertinoIcons.heart_fill),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(CupertinoIcons.person_fill),
           ),
         ],
       ),

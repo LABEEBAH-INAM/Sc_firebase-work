@@ -7,16 +7,17 @@ class eCommerceBook extends StatefulWidget {
   const eCommerceBook({super.key});
 
   @override
-  State<eCommerceBook> createState() => _eCommerceBookState();
+  State<eCommerceBook> createState() => eCommerceBookState();
 }
 
-class _eCommerceBookState extends State<eCommerceBook> {
+class eCommerceBookState extends State<eCommerceBook> {
   int activeIndex = 0;
 
   final List<String> images = [
     'assets/images/1.jpg',
     'assets/images/2.jpg',
     'assets/images/3.jpg',
+    'assets/images/4.jpg',
   ];
 
   final List<Map<String, String>> categories = [
@@ -37,6 +38,7 @@ class _eCommerceBookState extends State<eCommerceBook> {
         ),
         title: const Text('E_Commerce Platform'),
       ),
+      
       body: ListView(
         children: [
           Card(
@@ -92,7 +94,7 @@ class _eCommerceBookState extends State<eCommerceBook> {
 
           const ListTile(
             title: Text('Categories'),
-            trailing: Text('Show all', style: TextStyle(color: Colors.indigo)),
+            trailing: Text('Show all', style: TextStyle(color: Colors.blue)),
           ),
 
           SizedBox(
@@ -119,7 +121,7 @@ class _eCommerceBookState extends State<eCommerceBook> {
 
           const ListTile(
             title: Text('Products'),
-            trailing: Text('Show all', style: TextStyle(color: Colors.indigo)),
+            trailing: Text('Show all', style: TextStyle(color: Colors.blue)),
           ),
 
           // GridView.count(
