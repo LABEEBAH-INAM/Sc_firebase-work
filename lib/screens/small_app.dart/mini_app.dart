@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login.dart';
-import 'package:flutter_application_1/screens/MultiProviders/home_screen_m.dart';
 import 'package:flutter_application_1/screens/small_app.dart/home_Screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/wishlist_screen.dart';
 import 'package:flutter_application_1/screens/small_app.dart/orders_screen.dart';
@@ -71,7 +70,7 @@ class _MiniAppState extends State<MiniApp> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFFFF85BB), Color(0xFFCE6CFF)],
+              colors: [Color(0xFFFF85BB), Color(0xFF00B7EB)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -178,6 +177,7 @@ DrawerHeader(
       ),
       
       body: Container(color: Color(0xFFF5F5F5), child: widgets[currentIndex]),
+
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           setState(() {

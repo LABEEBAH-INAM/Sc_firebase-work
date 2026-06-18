@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login.dart';
-import 'package:flutter_application_1/screens/MultiProviders/home_screen_m.dart';
 import 'package:flutter_application_1/screens/small_app.dart/mini_app.dart';
 
 class RegisterClass extends StatefulWidget {
@@ -24,17 +24,29 @@ class _RegisterClassState extends State<RegisterClass> {
     setState(() {
       loading = true;
     });
-    try {
-      await auth.createUserWithEmailAndPassword(
-        
-        email: email.text,
-        password: password.text,
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MiniApp()),
-      );
-    } catch (e) {
+   try {
+    UserCredential userCredential =
+        await auth.createUserWithEmailAndPassword(
+      email: email.text.trim(),
+      password: password.text.trim(),
+    );
+
+    String uid = userCredential.user!.uid;
+
+    // ✅ SAVE PROFILE IN FIRESTORE
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'uid': uid,
+      'name': name.text.trim(),
+      'email': email.text.trim(),
+      'address': "",
+      'created_at': Timestamp.now(),
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MiniApp()),
+    );
+  }  catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));

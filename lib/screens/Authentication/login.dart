@@ -35,6 +35,7 @@ class _LoginClassState extends State<LoginClass> {
         (value) => false,
       );
     } catch (e) {
+      print(e);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -43,49 +44,50 @@ class _LoginClassState extends State<LoginClass> {
     }
   }
 
-  void continueWithGooglee() async {
-    // Fixed spelling
-    String webClientId =
-        '1059284167916-gg15dml65ib20p79r5ok0j3v2h8p7ied.apps.googleusercontent.com';
+  // void continueWithGooglee() async {
+  //   // Fixed spelling
+  //   String webClientId =
+  //       '1059284167916-gg15dml65ib20p79r5ok0j3v2h8p7ied.apps.googleusercontent.com';
 
-    try {
-      setState(() {
-        loading = true; // Start loading at the beginning
-      });
+  //   try {
+  //     setState(() {
+  //       loading = true; // Start loading at the beginning
+  //     });
 
-      GoogleSignIn signIn = GoogleSignIn.instance;
-      await signIn.initialize(serverClientId: webClientId);
+  //     GoogleSignIn signIn = GoogleSignIn.instance;
+  //     await signIn.initialize(serverClientId: webClientId);
 
-      GoogleSignInAccount? account = await signIn.authenticate();
+  //     GoogleSignInAccount? account = await signIn.authenticate();
 
-      // Added null check to prevent crashes
-      if (account != null) {
-        GoogleSignInAuthentication googleAuth = await account.authentication;
+  //     // Added null check to prevent crashes
+  //     if (account != null) {
+  //       GoogleSignInAuthentication googleAuth = await account.authentication;
 
-        final credential = GoogleAuthProvider.credential(
-          idToken: googleAuth.idToken,
-        );
+  //       final credential = GoogleAuthProvider.credential(
+  //         idToken: googleAuth.idToken,
+  //       );
 
-        // Call this only once
-        await auth.signInWithCredential(credential);
+  //       // Call this only once
+  //       await auth.signInWithCredential(credential);
 
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => MiniApp()),
-          (value) => false,
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
-    } finally {
-      setState(() {
-        loading = false; // Always stop loading in finally block
-      });
-    }
-  }
+  //       Navigator.pushAndRemoveUntil(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => MiniApp()),
+  //         (value) => false,
+  //       );
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text(e.toString())));
+  //   } finally {
+  //     setState(() {
+  //       loading = false; // Always stop loading in finally block
+  //     });
+  //   }
+  // }
 
+  
   @override
   Widget build(BuildContext context) {
     return 
@@ -233,7 +235,6 @@ class _LoginClassState extends State<LoginClass> {
 
               TextButton.icon(
                 onPressed: () {
-                  continueWithGooglee();
                 },
                 icon: const Icon(Icons.g_mobiledata, size: 35),
                 label: const Text('Continue with Google'),
@@ -276,5 +277,6 @@ class _LoginClassState extends State<LoginClass> {
           ),
         ),
 );
+ 
   }
 }
